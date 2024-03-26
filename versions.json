@@ -1,4 +1,5 @@
-versions = [
+{
+    "versions": [
     "Home_Core",
     "Home_Core(Country Specific)",
     "Home_Core(Single Language)",
@@ -43,5 +44,6 @@ versions = [
     "Windows_10_Enterprise_S",
     "Windows_10_Enterprise_N",
     "Windows_10_Enterprise_G_N",
-    "Windows_10_Enterprise_N_LTSB_2016",  
-]
+    "Windows_10_Enterprise_N_LTSB_2016" 
+    ]
+}

@@ -1,53 +1,64 @@
 import tkinter as tk
 from tkinter import ttk
 import subprocess
+import json
 
-nazwy_wersji = [
-    "Home_Core",
-    "Home_Core(Country Specific)",
-    "Home_Core(Single Language)",
-    # Wszystkie inne nazwy wersji...
-]
+def button_click(version, product_key, button):
+    subprocess.run(["cmd", "/c", f"slmgr.vbs /ipk {product_key}"])
+    button.config(bg="blue", fg="white", state="disabled")
 
-klucze_produktu = [
-    "TX9XD-98N7V-6WMQ6-BX7FG-H8Q99",
-    "PVMJN-6DFY6-9CCP6-7BKTT-D3WVR",
-    # Wszystkie inne klucze produktu...
-]
+def create_table(root, versions, product_keys):
+    table = tk.Frame(root, bg="black")
+    table.pack(padx=10, pady=10)
 
-def klikniecie_przycisku(nazwa_wersji, klucz_produktu):
-    subprocess.run(["cmd", "/c", f"slmgr.vbs /ipk {klucz_produktu}"])
+    canvas = tk.Canvas(table, bg="black", height=400)  # Ustawienie większej wysokości
+    canvas.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
 
-okno = tk.Tk()
-okno.title("Informacje o wersji i kluczu Windows")
+    scrollbar = ttk.Scrollbar(table, orient=tk.VERTICAL, command=canvas.yview)
+    scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
 
-# Utwórz ramkę z przewijanym obszarem
-ramka = tk.Frame(okno)
-ramka.pack(padx=10, pady=10)
+    canvas.configure(yscrollcommand=scrollbar.set)
+    canvas.bind("<Configure>", lambda e: canvas.configure(scrollregion=canvas.bbox("all")))
 
-# Utwórz przewijany obszar
-scrollbar = tk.Scrollbar(ramka)
-scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
+    inner_frame = tk.Frame(canvas, bg="black")
+    canvas.create_window((0, 0), window=inner_frame, anchor="nw")
 
-# Utwórz listę rozwijaną w ramce
-lista_rozwijana = tk.Listbox(ramka, yscrollcommand=scrollbar.set, height=15, width=80)
-scrollbar.config(command=lista_rozwijana.yview)
-lista_rozwijana.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
+    buttons = []
 
-# Wstaw elementy do listy rozwijanej
-for i, (nazwa_wersji, klucz_produktu) in enumerate(zip(nazwy_wersji, klucze_produktu)):
-    lista_rozwijana.insert(tk.END, f"{nazwa_wersji}: {klucz_produktu}")
+    for i, (version, product_key) in enumerate(zip(versions, product_keys)):
+        label_version = tk.Label(inner_frame, text=version, bg="black", fg="white", width=30)
+        label_version.grid(row=i, column=0)
 
-def aktywuj_wybrany():
-    # Pobierz indeks wybranego elementu
-    indeks = lista_rozwijana.curselection()
-    if indeks:
-        indeks = int(indeks[0])
-        nazwa_wersji, klucz_produktu = nazwy_wersji[indeks], klucze_produktu[indeks]
-        klikniecie_przycisku(nazwa_wersji, klucz_produktu)
+        label_key = tk.Label(inner_frame, text=product_key, bg="black", fg="white", width=30)
+        label_key.grid(row=i, column=1)
 
-# Dodaj przycisk "Aktywuj"
-przycisk_aktywacji = ttk.Button(okno, text="Aktywuj wybrany klucz", command=aktywuj_wybrany)
-przycisk_aktywacji.pack(pady=10)
+        button = ttk.Button(inner_frame, text="Activate")
+        button.grid(row=i, column=2)
+        button.bind("<Enter>", lambda event, b=button: b.config(bg="blue", fg="white"))
+        button.bind("<Leave>", lambda event, b=button: b.config(bg="white", fg="black"))
+        button.config(command=lambda v=version, pk=product_key, btn=button: button_click(v, pk, btn))
+        buttons.append(button)
 
-okno.mainloop()
+    return buttons
+
+def load_data_from_json(json_file):
+    with open(json_file, "r") as file:
+        data = json.load(file)
+    return data
+
+def main():
+    okno = tk.Tk()
+    okno.title("Windows Version Activator")
+    okno.configure(bg="black")
+
+    versions_data = load_data_from_json("versions.json")
+    product_keys_data = load_data_from_json("product_keys.json")
+
+    versions, product_keys = versions_data["versions"], product_keys_data["product_keys"]
+
+    buttons = create_table(okno, versions, product_keys)
+
+    okno.mainloop()
+
+if __name__ == "__main__":
+    main()
