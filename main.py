@@ -8,7 +8,7 @@ def activate_product(product_key_var):
     if product_key:
         subprocess.run(["cmd", "/c", f"slmgr.vbs /ipk {product_key}"])
 
-def create_table(root, versions, product_keys, product_key_var, search_text):
+def create_table(root, versions, product_keys, product_key_var, search_text, scrollbar):
     # Usunięcie poprzedniej tabeli, jeśli istnieje
     for widget in root.winfo_children():
         if isinstance(widget, ttk.Treeview):
@@ -20,8 +20,12 @@ def create_table(root, versions, product_keys, product_key_var, search_text):
     table.heading("Product Key", text="Product Key")
     table.pack(fill=tk.BOTH, expand=True)
 
-    scrollbar = ttk.Scrollbar(root, orient="vertical", command=table.yview)
-    scrollbar.pack(side="right", fill="y")
+    if scrollbar is None:
+        scrollbar = ttk.Scrollbar(root, orient="vertical", command=table.yview)
+        scrollbar.pack(side="right", fill="y")
+    else:
+        scrollbar.configure(command=table.yview)
+    
     table.configure(yscrollcommand=scrollbar.set)
 
     filtered_versions = [version for version in versions if search_text.lower() in version.lower()]
@@ -43,10 +47,10 @@ def load_data_from_json(json_file):
 
 def on_search():
     search_text = search_var.get()
-    create_table(root, versions, product_keys, product_key_var, search_text)
+    create_table(root, versions, product_keys, product_key_var, search_text, scrollbar)
 
 def main():
-    global root, search_var, versions, product_keys, product_key_var
+    global root, search_var, versions, product_keys, product_key_var, scrollbar
 
     root = tk.Tk()
     root.title("Windows Version Activator")
@@ -57,6 +61,7 @@ def main():
     versions, product_keys = versions_data["versions"], product_keys_data["product_keys"]
 
     product_key_var = tk.StringVar()
+    scrollbar = None
 
     search_frame = tk.Frame(root)
     search_frame.pack(pady=(10, 0))
@@ -69,7 +74,7 @@ def main():
     search_entry = ttk.Entry(search_frame, textvariable=search_var)
     search_entry.pack(side=tk.LEFT)
 
-    create_table(root, versions, product_keys, product_key_var, "")
+    create_table(root, versions, product_keys, product_key_var, "", scrollbar)
 
     activate_button = ttk.Button(root, text="Activate", command=lambda: activate_product(product_key_var))
     activate_button.pack()
