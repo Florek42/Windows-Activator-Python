@@ -8,39 +8,32 @@ def activate_product(product_key_var):
     if product_key:
         subprocess.run(["cmd", "/c", f"slmgr.vbs /ipk {product_key}"])
 
-def create_table(root, versions, product_keys, product_key_var):
-    table = tk.Frame(root, bg="white")
-    table.pack(padx=10, pady=10, fill=tk.BOTH, expand=True)
+def create_table(root, versions, product_keys, product_key_var, search_text):
+    # Usunięcie poprzedniej tabeli, jeśli istnieje
+    for widget in root.winfo_children():
+        if isinstance(widget, ttk.Treeview):
+            widget.destroy()
 
-    # Nazwy kolumn
-    tk.Label(table, text="Version", bg="white", fg="black", width=30).grid(row=0, column=0, sticky="ew")
-    tk.Label(table, text="Product Key", bg="white", fg="black", width=30).grid(row=0, column=1, sticky="ew")
+    # Utworzenie nowej tabeli
+    table = ttk.Treeview(root, columns=("Version", "Product Key"), show="headings")
+    table.heading("Version", text="Version")
+    table.heading("Product Key", text="Product Key")
+    table.pack(fill=tk.BOTH, expand=True)
 
-    canvas = tk.Canvas(table, bg="white")
-    canvas.grid(row=1, columnspan=2, sticky="nsew")
+    scrollbar = ttk.Scrollbar(root, orient="vertical", command=table.yview)
+    scrollbar.pack(side="right", fill="y")
+    table.configure(yscrollcommand=scrollbar.set)
 
-    scrollbar = ttk.Scrollbar(table, orient=tk.VERTICAL, command=canvas.yview)
-    scrollbar.grid(row=1, column=2, sticky="ns")
-    canvas.configure(yscrollcommand=scrollbar.set)
+    filtered_versions = [version for version in versions if search_text.lower() in version.lower()]
 
-    inner_frame = tk.Frame(canvas, bg="white")
-    canvas.create_window((0, 0), window=inner_frame, anchor="nw")
+    for version, product_key in zip(filtered_versions, product_keys):
+        table.insert("", "end", values=(version, product_key))
 
-    for i, (version, product_key) in enumerate(zip(versions, product_keys), start=1):
-        tk.Label(inner_frame, text=version, bg="white", fg="black", width=30, anchor="w").grid(row=i, column=0, sticky="ew")
-        tk.Label(inner_frame, text=product_key, bg="white", fg="black", width=30, anchor="w").grid(row=i, column=1, sticky="ew")
+    table.bind("<ButtonRelease-1>", lambda event: on_select(table, product_key_var))
 
-        # Bindowanie zdarzenia kliknięcia na dany wiersz
-        inner_frame.grid_rowconfigure(i, weight=1)
-        inner_frame.grid_columnconfigure(0, weight=1)
-        inner_frame.grid_columnconfigure(1, weight=1)
-
-        inner_frame.bind("<Button-1>", lambda event, v=version, pk=product_key_var: select_version(v, pk, product_key_var))
-
-    inner_frame.update_idletasks()
-    canvas.config(scrollregion=canvas.bbox("all"))
-
-def select_version(version, product_key, product_key_var):
+def on_select(table, product_key_var):
+    item = table.selection()[0]
+    version, product_key = table.item(item, "values")
     product_key_var.set(product_key)
 
 def load_data_from_json(json_file):
@@ -48,10 +41,15 @@ def load_data_from_json(json_file):
         data = json.load(file)
     return data
 
+def on_search():
+    search_text = search_var.get()
+    create_table(root, versions, product_keys, product_key_var, search_text)
+
 def main():
-    okno = tk.Tk()
-    okno.title("Windows Version Activator")
-    okno.configure(bg="white")
+    global root, search_var, versions, product_keys, product_key_var
+
+    root = tk.Tk()
+    root.title("Windows Version Activator")
 
     versions_data = load_data_from_json("versions.json")
     product_keys_data = load_data_from_json("product_keys.json")
@@ -60,22 +58,23 @@ def main():
 
     product_key_var = tk.StringVar()
 
-    create_table(okno, versions, product_keys, product_key_var)
+    search_frame = tk.Frame(root)
+    search_frame.pack(pady=(10, 0))
 
-    search_frame = tk.Frame(okno, bg="white")
-    search_frame.pack(pady=(0, 10))
-
-    search_label = tk.Label(search_frame, text="Search:", bg="white", fg="black")
+    search_label = tk.Label(search_frame, text="Search:")
     search_label.pack(side=tk.LEFT)
 
     search_var = tk.StringVar()
+    search_var.trace_add("write", lambda *args: on_search())
     search_entry = ttk.Entry(search_frame, textvariable=search_var)
     search_entry.pack(side=tk.LEFT)
 
-    activate_button = ttk.Button(okno, text="Activate", command=lambda: activate_product(product_key_var))
+    create_table(root, versions, product_keys, product_key_var, "")
+
+    activate_button = ttk.Button(root, text="Activate", command=lambda: activate_product(product_key_var))
     activate_button.pack()
 
-    okno.mainloop()
+    root.mainloop()
 
 if __name__ == "__main__":
     main()
