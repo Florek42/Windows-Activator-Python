@@ -3,13 +3,12 @@ from tkinter import ttk
 import subprocess
 import json
 
-def button_click(version_var, product_key_var):
-    version = version_var.get()
+def button_click(version, product_key_var):
     product_key = product_key_var.get()
-    if version and product_key:
+    if product_key:
         subprocess.run(["cmd", "/c", f"slmgr.vbs /ipk {product_key}"])
 
-def create_table(root, versions, product_keys, version_var, product_key_var):
+def create_table(root, versions, product_keys, product_key_var):
     table = tk.Frame(root, bg="white")
     table.pack(padx=10, pady=10, fill=tk.BOTH, expand=True)
 
@@ -32,12 +31,21 @@ def create_table(root, versions, product_keys, version_var, product_key_var):
         label_key = tk.Label(inner_frame, text=product_key, bg="white", fg="black", width=30)
         label_key.grid(row=i, column=1)
 
-        button = ttk.Button(inner_frame, text="Select", command=lambda v=version, pk=product_key: select_version(v, pk, version_var, product_key_var))
-        button.grid(row=i, column=2)
+        inner_frame.grid_rowconfigure(i, weight=1)
+        inner_frame.grid_columnconfigure(0, weight=1)
+        inner_frame.grid_columnconfigure(1, weight=1)
 
-def select_version(version, product_key, version_var, product_key_var):
-    version_var.set(version)
-    product_key_var.set(product_key)
+        # Bindowanie zdarzenia kliknięcia na dany wiersz
+        label_version.bind("<Button-1>", lambda event, v=version, pk=product_key_var: select_version(v, pk))
+        label_key.bind("<Button-1>", lambda event, v=version, pk=product_key_var: select_version(v, pk))
+
+def select_version(version, product_key_var):
+    product_key_var.set(version)
+
+def load_data_from_json(json_file):
+    with open(json_file, "r") as file:
+        data = json.load(file)
+    return data
 
 def main():
     okno = tk.Tk()
@@ -49,15 +57,14 @@ def main():
 
     versions, product_keys = versions_data["versions"], product_keys_data["product_keys"]
 
-    version_var = tk.StringVar()
     product_key_var = tk.StringVar()
 
-    create_table(okno, versions, product_keys, version_var, product_key_var)
+    create_table(okno, versions, product_keys, product_key_var)
 
     button_frame = tk.Frame(okno, bg="white")
     button_frame.pack(pady=10)
 
-    activate_button = ttk.Button(button_frame, text="Activate", command=lambda: button_click(version_var, product_key_var))
+    activate_button = ttk.Button(button_frame, text="Activate", command=lambda: button_click(product_key_var))
     activate_button.pack()
 
     okno.mainloop()

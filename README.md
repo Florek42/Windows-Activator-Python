@@ -48,4 +48,6 @@ Contributions are welcome! Please follow these steps:
 This project is licensed under the [MIT License](LICENSE).
 
 ## Acknowledgements
-- Special thanks to [YourName](https://github.com/yourname) for inspiration and guidance.
+- Come and see [c7x43t](https://gist.github.com/c7x43t/ceb8ab75da308ea820546375e9230dd9) git. He inspired me.
+
+
