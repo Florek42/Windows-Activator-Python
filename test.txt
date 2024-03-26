@@ -1,0 +1,95 @@
+Home_Core                            TX9XD-98N7V-6WMQ6-BX7FG-H8Q99        
+Home_Core(Country Specific)         PVMJN-6DFY6-9CCP6-7BKTT-D3WVR  
+Home_Core(Single Language)          7HNRX-D7KGG-3K4RQ-4WPJ4-YTDFH  
+Home_Core_N                          3KHY7-WNT83-DGQKR-F7HPR-844BM 
+Professional                         W269N-WFGWX-YVC9B-4J6C9-T83GX 
+Professional_N                       MH37W-N47XK-V7XM9-C7227-GCQG9
+Professional_Enterprise				 
+Professional_Workstation			 
+Enterprise                           NPPR9-FWDCX-D2C8J-H872K-2YT43 
+Enterprise_N                         DPH2V-TTNVB-4X9Q3-TJR4H-KHJW4 
+Education                            NW6C2-QMPVW-D7KKK-3GKT6-VCFB2 
+Education_N                          2WH4N-8QGBV-H22JP-CT43Q-MDWWJ 
+Enterprise_2015_LTSB                 WNMTR-4C88C-JK8YV-HQ7T2-76DF9
+Enterprise 2015_LTSB N               2F77B-TNFGY-69QQF-B8YKP-D69TJ 
+Enterprise_2016_LTSB                 DCPHK-NFMTC-H88MJ-PFHPY-QJ4BJ  
+Enterprise_2016_LTSB N               QFFDN-GRT3P-VKWWX-X7T3R-8B639
+Windows_10_Enterprise_N_Eval 	MNXKQ-WY2CT-JWBJ2-T68TQ-YBH2V
+Windows_10_Enterprise_S_Eval 	7TNX7-H36JG-QFF42-K4JYV-YY482
+Windows_10_Enterprise_S_N_Eval 	D3M8K-4YN49-89KYG-4F3DR-TVJW3
+Windows_10_Enterprise_Eval 	VPMWD-PVNRR-79WJ9-VVJQC-3YH2G
+Windows_10_Starter 	D6RD9-D4N8T-RT9QX-YW6YT-FCWWJ
+Windows_10_Education_N 	84NGF-MHBT6-FXBX8-QWJK7-DRR8H
+Windows_10_Education 	YNMGQ-8RYV3-4PGQ3-C8XTP-7CFBY
+Windows_10_Professional 	VK7JG-NPHTM-C97JM-9MPGT-3V66T
+Windows_10_Professional_N 	2B87N-8KFHP-DKV6R-Y2C8J-PKCKT
+Windows_10_Core 	YTMG3-N6DKC-DKB77-7M9GH-8HVX7
+Windows_10_Core_N 	4CPRK-NM3K3-X6XXQ-RXX86-WXCHW
+Core_Single_Language 	BT79Q-G7N6G-PGBYW-4YWX6-6F4BT
+Core_Country_Specific 	N2434-X9D7W-8PF6X-8DV9T-8TYMD
+Windows_10_Home YTMG3-N6DKC-DKB77-7M9GH-8HVX7
+Windows_10_Home_N  4CPRK-NM3K3-X6XXQ-RXX86-WXCHW
+Windows_10_Pro  VK7JG-NPHTM-C97JM-9MPGT-3V66T
+Windows_10_Pro_N  2B87N-8KFHP-DKV6R-Y2C8J-PKCKT
+Windows_10_Pro_for_Workstations  DXG7C-N36C4-C4HTG-X4T3X-2YV77
+Windows_10_Pro_N_for_Workstations  WYPNQ-8C467-V2W6J-TX4WX-WT2RQ
+Windows_10_S  3NF4D-GF9GY-63VKH-QRC3V-7QW8P
+Windows_10_Education  YNMGQ-8RYV3-4PGQ3-C8XTP-7CFBY
+Windows_10_Education_N  84NGF-MHBT6-FXBX8-QWJK7-DRR8H
+Windows_10_Pro_Education  8PTT6-RNW4C-6V7J2-C2D3X-MHBPB
+Windows_10_Pro_Education_N  GJTYN-HDMQY-FRR76-HVGC7-QPF8P
+Windows_10_Enterprise  XGVPP-NMH47-7TTHJ-W3FW7-8HV2C
+Windows_10_Enterprise_S  NK96Y-D9CD8-W44CQ-R8YTK-DYJWX
+Windows_10_Enterprise_N  WGGHN-J84D6-QYCPR-T7PJ7-X766F
+Windows_10_Enterprise_G_N  FW7NV-4T673-HF4VX-9X4MM-B4H4T
+Windows_10_Enterprise_N_LTSB_2016 RW7WN-FMT44-KRGBK-G44WK-QV7YK
+
+
+nazwy_wersji = [
+    "Home_Core",
+    "Home_Core(Country Specific)",
+    "Home_Core(Single Language)",
+    "Home_Core_N",
+    "Professional",
+    "Professional_N",
+    "Professional_Enterprise",
+    "Professional_Workstation",
+    "Enterprise",
+    "Enterprise_N",
+    "Education",
+    "Education_N",
+    "Enterprise_2015_LTSB",
+    "Enterprise 2015_LTSB N",
+    "Enterprise_2016_LTSB",
+    "Enterprise_2016_LTSB N",
+    "Windows_10_Enterprise_N_Eval",
+    "Windows_10_Enterprise_S_Eval",
+    "Windows_10_Enterprise_S_N_Eval",
+    "Windows_10_Enterprise_Eval",
+    "Windows_10_Starter",
+    "Windows_10_Education_N",
+    "Windows_10_Education",
+    "Windows_10_Professional",
+    "Windows_10_Professional_N",
+    "Windows_10_Core",
+    "Windows_10_Core_N",
+    "Core_Single_Language",
+    "Core_Country_Specific",
+    "Windows_10_Home",
+    "Windows_10_Home_N",
+    "Windows_10_Pro",
+    "Windows_10_Pro_N",
+    "Windows_10_Pro_for_Workstations",
+    "Windows_10_Pro_N_for_Workstations",
+    "Windows_10_S",
+    "Windows_10_Education",
+    "Windows_10_Education_N",
+    "Windows_10_Pro_Education",
+    "Windows_10_Pro_Education_N",
+    "Windows_10_Enterprise",
+    "Windows_10_Enterprise_S",
+    "Windows_10_Enterprise_N",
+    "Windows_10_Enterprise_G_N",
+    "Windows_10_Enterprise_N_LTSB_2016",
+    
+]
