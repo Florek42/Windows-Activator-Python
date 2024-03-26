@@ -1,2 +1,5 @@
 zrob by double click dzialal jak activate, 
 napraw buga z searchbarem ktorys ie dubluje
+
+zrobic program ktory rysuje siatke na ekranie wzgledem rozdzielczosci ekranu, mozna wybrac okno lub ekran i rozmiar siatki
+siatka pokazuje kratki ile na ile px jest i jakie sa pozcje kursora w rogu 
