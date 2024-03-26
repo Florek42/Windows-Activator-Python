@@ -1,8 +1,8 @@
 # Windows Version Activator
 
-![GitHub last commit](https://img.shields.io/github/last-commit/yourusername/Windows-Version-Activator)
-![GitHub](https://img.shields.io/github/license/yourusername/Windows-Version-Activator)
-![GitHub repo size](https://img.shields.io/github/repo-size/yourusername/Windows-Version-Activator)
+![GitHub last commit](https://img.shields.io/github/last-commit/forek42/Windows-Version-Activator)
+![GitHub](https://img.shields.io/github/license/forek42/Windows-Version-Activator)
+![GitHub repo size](https://img.shields.io/github/repo-size/forek42/Windows-Version-Activator)
 
 ## Description
 Windows Version Activator is a simple Python application built with Tkinter that allows users to activate different versions of Windows using product keys. It provides a user-friendly interface where users can select a Windows version and activate it with the corresponding product key.
@@ -10,6 +10,7 @@ Windows Version Activator is a simple Python application built with Tkinter that
 ## Features
 - Displays a list of Windows versions and their corresponding product keys.
 - Allows users to activate a selected Windows version with a single click.
+- Searchbar included
 
 ## Screenshots
 Include screenshots of your application here.
